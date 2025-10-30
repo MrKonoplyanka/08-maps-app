@@ -2,3 +2,4 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark, night;
 }
+@import 'maplibre-gl/dist/maplibre-gl.css';

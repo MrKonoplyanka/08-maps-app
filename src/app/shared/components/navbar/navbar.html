@@ -10,14 +10,14 @@
 
         @for (route of routes; track route.path) {
 
-          <li><a>{{route.title}}</a></li>
+          <li><a [routerLink]="route.path" >{{route.title}}</a></li>
         }
       </ul>
     </div>
   </div>
   <div class="navbar-center">
     <!-- <a class="btn btn-ghost text-xl">daisyUI</a> -->
-    <a class="btn btn-ghost text-xl">{{routes.find()}}</a>
+    <a class="btn btn-ghost text-xl">{{pageTitle$ | async}}</a>
   </div>
   <div class="navbar-end">
     <button class="btn btn-ghost btn-circle">
