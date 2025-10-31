@@ -1,3 +1,4 @@
+import { centroidAttributes } from './../../../../node_modules/maplibre-gl/src/data/bucket/fill_extrusion_attributes';
 
 import { DecimalPipe, JsonPipe } from '@angular/common';
 import { AfterViewInit, Component, effect, ElementRef, signal, viewChild } from '@angular/core';
@@ -37,7 +38,11 @@ export class FullscreenMapPage implements AfterViewInit {
 
   mapSignal = signal<maplibregl.Map|null>(null);
   zoom = signal(2);
+  coordinates = signal({
+    lng: -1.7038,
+    lat: 40.4168
 
+  })
   zoomEffect = effect(()=>{
     if(!this.mapSignal()) return;
 
@@ -51,7 +56,7 @@ export class FullscreenMapPage implements AfterViewInit {
     const map = new maplibregl.Map({
       container: el,
       style: 'https://demotiles.maplibre.org/style.json', // alternativa estable al globe.json
-      center: [ -3.7038, 40.4168 ], // Madrid [lng, lat]
+      center: this.coordinates(), // Madrid [lng, lat]
       zoom: this.zoom(),
 
     });
@@ -67,6 +72,13 @@ export class FullscreenMapPage implements AfterViewInit {
       this.zoom.set(newZoom);
     })
     this.mapSignal!.set(map);
+    map.on('moveend', () => {
+      const center = map.getCenter();
+      this.coordinates.set(center);
+    })
+
+    this.mapSignal.set(map);
+
 
   }
 
